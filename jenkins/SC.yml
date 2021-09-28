@@ -85,12 +85,23 @@
         - cvss
         description: 'Choose whether to use CVE (PST approved) or CVSS scanning.'
         name: PROCESSOR_TYPE
-    - dynamic-choice:
-        name: THRESHOLD
-        script: 'return list = [ 1,2,3,4,5,6,7,8,9,10 ]'
-        description: |-
-          Only used for CVSS scanning. Threshold for Vulnerability Scoring from 1-10 (based on CVSS https://www.first.org/cvss/v2/guide ).
-          Default is 1 which means fail on all found vulnerabilities.
+    - raw:
+        xml: |
+          <org.biouno.unochoice.ChoiceParameter plugin="uno-choice@2.5.6">
+            <name>THRESHOLD</name>
+            <description>Only used for CVSS scanning. Threshold for Vulnerability Scoring from 1-10 (based on CVSS https://www.first.org/cvss/v2/guide ). Default is 1 which means fail on all found vulnerabilities.</description>
+            <visibleItemCount>1</visibleItemCount>
+            <script class="org.biouno.unochoice.model.GroovyScript">
+              <secureScript plugin="script-security@1.77">
+                <script>return [1,2,3,4,5,6,7,8,9,10]</script>
+                <sandbox>false</sandbox>
+              </secureScript>
+              <secureFallbackScript plugin="script-security@1.77">
+                <script/>
+                <sandbox>false</sandbox>
+              </secureFallbackScript>
+            </script>
+          </org.biouno.unochoice.ChoiceParameter>
     - bool:
         default: false
         description: |-
